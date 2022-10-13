@@ -51,11 +51,11 @@ pob_com_menor10000 = pob_mun %>%
 pob_com_menor10000$total %>% sum()
 
 pob_all = bind_rows(
-  pob %>% select(nom, pob = total),
+  pob_mun %>% select(nom, pob = total),
   pob_com_menor10000 %>% select(nom = nom_com, pob = total))
 
 taula_ingressos %>%
   left_join(pob_all, by = c('cc' = 'nom')) %>%
   mutate(per1000 = 1000 * `Menys de 12.449€` / pob)
 
-
+save(dades_n, file = 'dades_n.RData')
