@@ -9,7 +9,14 @@ rn_vrs = c(cc = "CC",
            grau_urg = "Grau d'urgència determinat pel Centre Coordinador.",
            dcontact = "Data de contacte amb la família",
            electro = "Subministrament d'electrodomèstics",
-           ringressos = "Rang d'ingressos")
+           ingressos = "Quin va ser l'import total d'ingressos bruts rebuts pel conjunt de la unitat familiar durant l'any 2019? (8)",
+           ringressos = "Rang d'ingressos",
+           membres = "Total composició de la unitat familiar (Dones i Homes)",
+           subministre_enderrariment = "En els últims 12 mesos, ha tingut enderrariments en el pagament de subministraments degut a dificultats econòmiques? (20)",
+           subministre_tall = "En els últims 12 mesos, ha tingut talls dels subministraments bàsics? (21)",
+           subministre_deute = "Té deutes pendents en relació als subministraments bàsics, en cas afirmatiu indiqui l'import? (23, 24 )",
+           categoria_llar = "En quina categoria energètica de la llar considera que està? (45)",
+           consum_desitjat = "Fa tot el consum energètic que desitjaria? (46)")
 
 library(lubridate)
 library(tidyr)
@@ -22,40 +29,5 @@ dades_n = dades %>%
                                                "de 35.200€ a 59.999€", "Més de 60.000€"))
   ) 
 
-taula_ingressos = dades_n %>% 
-  count(cc, ringressos) %>%
-  pivot_wider(names_from = ringressos, values_from = n, values_fill = 0L)
-taula_ingressos
-
-library(readr)
-mun_com = read_csv2("mpiscatalunya.csv", skip = 4, col_types = c('cccc_'),
-                    col_names = c('codi_mun', 'nom_mun', 'codi_com', 'nom_com'))
-pob_mun = read_csv("Poblaci__de_Catalunya_per_municipi__rang_d_edat_i_sexe.csv", skip = 1,
-               col_types = c("icc______iii"), col_names = c('any', 'codi', 'nom', 't1','t2','t3')) %>%
-  mutate(total = t1+t2+t3) %>%
-  filter(any == '2020') %>%
-  mutate(
-    nom = if_else(nom == "Castell-Platja d'Aro", "Castell d'Aro", nom),
-    nom = if_else(nom == "Lloret de Mar", "Lloret", nom)
-  ) %>%
-  inner_join(mun_com, by = c('codi' = 'codi_mun'))
-pob_mun %>%
-  filter(total >= 10000, nom_com == 'Baix Empordà')
-
-pob_com_menor10000 = pob_mun %>%
-  filter(total < 10000) %>%
-  group_by(codi_com, nom_com) %>%
-  summarise(total = sum(total)) %>%
-  ungroup()
-
-pob_com_menor10000$total %>% sum()
-
-pob_all = bind_rows(
-  pob_mun %>% select(nom, pob = total),
-  pob_com_menor10000 %>% select(nom = nom_com, pob = total))
-
-taula_ingressos %>%
-  left_join(pob_all, by = c('cc' = 'nom')) %>%
-  mutate(per1000 = 1000 * `Menys de 12.449€` / pob)
 
 save(dades_n, file = 'dades_n.RData')
