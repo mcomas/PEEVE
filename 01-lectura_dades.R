@@ -3,6 +3,8 @@ library(readxl)
 dades = read_excel('data/22_06_02 DRIVE CC.xlsx')
 glimpse(dades)
 
+# Carreguem auditories i polim dades rebudes.
+
 rn_vrs = c(cc = "CC",
            time = 'Marca de temps',
            id_auditoria = "CODI D'AUDITORIA",
