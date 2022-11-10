@@ -40,4 +40,4 @@ comarques_ss = count(dades_n, cc) %>%
 
 
 
-save(comarques_ss, municipis_ss, file = 'poblacio_auditories.RData')
+save(comarques_ss, municipis_ss, mun_com, file = 'poblacio_auditories.RData')
