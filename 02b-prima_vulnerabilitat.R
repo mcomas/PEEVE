@@ -9,7 +9,6 @@ pvulnera = tibble(
     str_replace_all(",", ".") %>%
   str_replace_all(regex("  +"), ";")) %>%
   separate(rows, c('nom_comarca', 'pes_pob', 'pes_pob_adj', 'prima_vul'), sep = ';') %>%
-  mutate(across(-nom_comarca, as.numeric)) %>%
-  pull(prima_vul)
+  mutate(across(-nom_comarca, as.numeric)) 
 
 save(pvulnera, file = 'prima_vulnerabilitat.RData')

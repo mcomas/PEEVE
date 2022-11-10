@@ -6,7 +6,8 @@ library(readxl)
 mun_com = read_excel("mpiscatalunya.xlsx", skip = 4, 
                      col_names = c('codi_mun', 'nom_mun', 'codi_com', 'nom_com', 'ss')) %>%
   mutate(
-    codi_mun = sprintf("%06d", codi_mun)
+    codi_mun = sprintf("%06d", codi_mun),
+    nom_com = str_replace(nom_com, "Aran", "Val d'Aran")
   )
 
 library(readr)
