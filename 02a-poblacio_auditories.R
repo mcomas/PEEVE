@@ -25,20 +25,18 @@ pob_mun = read_csv("Poblaci__de_Catalunya_per_municipi__rang_d_edat_i_sexe.csv",
 count(dades_n, cc)
 filter(mun_com, ss == 1)
 
-municipis_ss = count(dades_n, cc) %>%
+municipis_ss = count(dades_n, cc, eix) %>%
   full_join(pob_mun, by = c('cc' = 'nom')) %>%
   filter(ss == 1) %>%
   replace_na(list(n=0)) %>%
-  select(cc, n, codi_mun = codi, total)
+  select(cc, eix, n, codi_mun = codi, total)
 
 com_ss0 = pob_mun %>%
   filter(ss == 0) %>%
   group_by(codi_com, nom_com) %>%
   summarise(total = sum(total))
 
-comarques_ss = count(dades_n, cc) %>%
+comarques_ss = count(dades_n, cc, eix) %>%
   inner_join(com_ss0, by = c('cc' = 'nom_com'))
-
-
 
 save(comarques_ss, municipis_ss, mun_com, file = 'poblacio_auditories.RData')

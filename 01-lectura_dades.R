@@ -1,6 +1,22 @@
 library(dplyr)
 library(readxl)
-dades = read_excel('data/22_06_02 DRIVE CC.xlsx')
+dades = read_excel("data/22_06_02 DRIVE CC.xlsx", 
+                   col_types = c("text", "numeric", "text", 
+                                 "numeric", "text", "text", "text", 
+                                 "text", "numeric", "text", "text", 
+                                 "numeric", "text", "text", "numeric", 
+                                 "text", "text", "numeric", "text", 
+                                 "numeric", "text", "numeric", "text", 
+                                 "numeric", "text", "text", "text", 
+                                 "text", "text", "text", "text", "text", 
+                                 "text", "text", "text", "text", "text", 
+                                 "text", "text", "numeric", "text", 
+                                 "text", "text", "text", "text", "text", 
+                                 "text", "text", "text", "text", "text", 
+                                 "text", "text", "text", "text", "text", 
+                                 "text", "text", "text", "text", "text", 
+                                 "text", "text", "text", "text", "text", 
+                                 "text", "text", "text", "text"))
 glimpse(dades)
 
 # Carreguem auditories i polim dades rebudes.
@@ -25,6 +41,10 @@ library(tidyr)
 dades_n = dades %>%
   select(rn_vrs) %>% 
   mutate(
+    eix = NA_character_,
+    eix = if_else(str_starts(id_auditoria, '1'), 'social', eix),
+    eix = if_else(str_starts(id_auditoria, '3'), 'salut', eix),
+    eix = if_else(str_starts(id_auditoria, '4'), 'ciutadania', eix),
     electro = as.integer(if_else(electro == 'Sí, No', NA, electro == 'Sí')),
     dcontact = as.Date(as.numeric(dcontact), origin = "1899-12-30"),    # Perdem valor a id_auditoria = 117155701020
     ringressos = factor(ringressos, levels = c("Menys de 12.449€", "de 12.450€ a 19.999€", "de 20.000€ a 35.199€",

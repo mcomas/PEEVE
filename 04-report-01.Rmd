@@ -1,0 +1,66 @@
+---
+title: "Informe"
+author: "M. Comas i J. Saperas"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+load('dades_n.RData')
+load('poblacio_auditories.RData')
+load('prima_vulnerabilitat.RData')
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introducció
+
+Després de la lectura de diferents documents relacionats amb pobresa energètica.
+
+Lorem ipsum dolor sit amet. At expedita sapiente aut amet voluptatibus et quis quidem et quaerat beatae nam facilis quae. Sit explicabo adipisci et odit veritatis aut animi ullam! At reprehenderit soluta et atque doloribus et nihil nemo.
+
+Sit nostrum dicta sed cupiditate officiis est asperiores voluptas est voluptatem quam est molestiae molestias. Ut sint temporibus qui nihil saepe a dolorum animi et optio voluptatem et voluptas aliquam rem iusto laboriosam ea iusto illo. Aut mollitia minima est eius quia est distinctio neque aut perspiciatis dicta?
+
+Et internos molestiae sit exercitationem nostrum ab galisum atque et corrupti suscipit? Est mollitia rerum id dolor rerum nam voluptatum provident et quia doloremque.
+
+## Index auditories
+
+Lorem ipsum dolor sit amet. At expedita sapiente aut amet voluptatibus et quis quidem et quaerat beatae nam facilis quae. Sit explicabo adipisci et odit veritatis aut animi ullam! At reprehenderit soluta et atque doloribus et nihil nemo.
+
+```{r, out.width="70%"}
+load('03a-descriptiva_01.RData')
+ggplot(data = index_auditories) + 
+  geom_hline(yintercept = 2, col = 'red') +
+  geom_bar(aes(x = cc, y = auditories), stat = 'identity', alpha = 0.75, width = 0.85) +
+  labs(y = 'Auditories cada 1000 habitants', x = '', #title = 'Index d\'auditories',
+       subtitle = 'Totes les auditories') +
+  coord_flip() +
+  theme_minimal()
+```
+
+Lorem ipsum dolor sit amet. At expedita sapiente aut amet voluptatibus et quis quidem et quaerat beatae nam facilis quae. Sit explicabo adipisci et odit veritatis aut animi ullam! At reprehenderit soluta et atque doloribus et nihil nemo.
+
+```{r, out.width="70%"}
+load('03b-prima_vulne_vs_auditories.RData')
+
+ggplot(data = primes) + 
+  geom_hline(yintercept = 2, col = 'red') +
+  geom_bar(aes(x = cc, y = ratio), stat = 'identity', alpha = 0.75, width = 0.85) +
+  labs(y = 'Auditories cada 1000 habitants', x = '', #title = 'Index d\'auditories',
+       subtitle = 'Auditories socials', caption = "Resultats ajustats per prima de vulnerabilitat") +
+  coord_flip() +
+  theme_minimal()
+```
+
+## Recomenacions
+
+1. Caldria obtenir una mostra heterogènia. La part del territori que no ha contestat hauria de contestar. S'han d'activar polítiques perquè els eixos ciutadania i salut augmentin.
+1. S'han d'incorporar dades de despesa energètica per tal de poder computar els indicadors de pobresa energètica [1]. 
+1. Lorem ipsum dolor sit amet. At expedita sapiente aut amet voluptatibus et quis quidem et quaerat beatae nam facilis quae. Sit explicabo adipisci et odit veritatis aut animi ullam! At reprehenderit soluta et atque doloribus et nihil nemo.
+
+
+## Referències
+
+1. Metodologies per quantificar el seu abast i distribució geogràfica

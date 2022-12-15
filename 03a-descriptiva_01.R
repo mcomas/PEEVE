@@ -8,6 +8,8 @@ pob_all = bind_rows(comarques_ss, municipis_ss)
 #########################
 # Tant per mil auditories sobre població base
 index_auditories = pob_all %>%
+  group_by(cc) %>%
+  summarise(n = sum(n), total = first(total)) %>%
   transmute(cc, auditories = 1000 * n / total) %>%
   mutate(cc = fct_reorder(cc, auditories)) %>%
   arrange(desc(auditories))
@@ -15,11 +17,36 @@ index_auditories = pob_all %>%
 p_auditories = ggplot(data = index_auditories) + 
   geom_hline(yintercept = 2, col = 'red') +
   geom_bar(aes(x = cc, y = auditories), stat = 'identity', alpha = 0.75, width = 0.85) +
-  labs(y = 'Auditories cada 1000 habitants', x = '', title = 'Index d\'auditories') +
+  labs(y = 'Auditories cada 1000 habitants', x = '', title = 'Index d\'auditories',
+       subtitle = 'Totes les auditories') +
   coord_flip() +
   theme_minimal()
 p_auditories
-ggsave(p_auditories, file = 'auditories.pdf', width = 6.5, height = 4.6)
+
+index_auditories_social = pob_all %>%
+  filter(is.na(eix) | eix == 'social') %>%
+  group_by(cc) %>%
+  summarise(n = sum(n), total = first(total)) %>%
+  transmute(cc, auditories = 1000 * n / total) %>%
+  mutate(cc = fct_reorder(cc, auditories)) %>%
+  arrange(desc(auditories))
+
+p_auditories_social = ggplot(data = index_auditories_social) + 
+  geom_hline(yintercept = 2, col = 'red') +
+  geom_bar(aes(x = cc, y = auditories), stat = 'identity', alpha = 0.75, width = 0.85) +
+  labs(y = 'Auditories cada 1000 habitants', x = '', title = 'Index d\'auditories',
+       subtitle = 'Només eix social') +
+  coord_flip() +
+  theme_minimal()
+p_auditories_social
+
+save(index_auditories, index_auditories_social, file = '03a-descriptiva_01.RData')
+
+# library(patchwork)
+# p_auditories + p_auditories_social
+# 
+# ggsave(p_auditories, p_auditories_social,
+#        file = 'auditories.pdf', width = 6.5, height = 4.6)
 
 # 
 # taula_ingressos = dades_n %>% 
