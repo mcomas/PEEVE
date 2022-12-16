@@ -1,5 +1,5 @@
 ---
-title: "Informe"
+title: "Informe pel Programa d’Estalvi Energètic i Pobresa Energètica"
 author: "M. Comas i J. Saperas"
 date: "`r Sys.Date()`"
 output:
@@ -17,17 +17,18 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Introducció
 
-L'informe que es presenta vol analitzar les dades de pobresa energètica que des del departament d'habitatge de la Diputació de Girona s'han anat recollint a través de diferents auditories. La base de dades consta de 674 auditories realitzades en habitatges de la provincia de Girona.
-Per tal de comprendre millor com es classifica la probresa energètica s'ha pres de referència els documents:
+L'informe que es presenta vol analitzar les dades de pobresa energètica que des del departament d'habitatge de la Diputació de Girona s'han anat recollint a través de diferents auditories. La base de dades consta de 674 auditories realitzades en habitatges de la província de Girona.
+Per tal de comprendre millor com es classifica la pobresa energètica s'ha pres de referència els documents:
+
 1. La pobresa energètica a Catalunya: Metodologies per quantificar el seu abast i distribució geogràfica.
 1. Abast de la pobresa energètica a Catalunya: Causes, conseqüències i possibles polítiques per mitigar-la.
-Aquests documents estabeixen a través d'indicadors els criteris per classificar la pobresa energètica.
+Aquests documents estableixen a través d'indicadors els criteris per classificar la pobresa energètica.
 
-El treball estadístic realitzat vol quantificar l'impacte sobre el territori que ha tingut el projecte d'habitatge de la Diputació de Girona.
+El treball estadístic dut a terme vol quantificar l'impacte sobre el territori que ha tingut el projecte d'habitatge de la Diputació de Girona.
 
 ## Index auditories
 
-Per tal de valorar l'impacte del programa sobre el territori, volem comparar el nombre d'auditories fetes en els diferents municipis i/o comarques. Per tal que aquesta comparació sigui acurada prenem com a indicador el nombre d'auditories realitzades normalitzat per la seva població.
+Per tal de valorar l'impacte del programa sobre el territori, volem comparar el nombre d'auditories fetes en els diferents municipis o comarques. Per tal que aquesta comparació sigui acurada prenem com a indicador el nombre d'auditories realitzades normalitzat per la seva població.
 
 ```{r, out.width="70%"}
 load('03a-descriptiva_01.RData')
@@ -40,10 +41,12 @@ ggplot(data = index_auditories) +
   theme_minimal()
 ```
 
-Com es pot veure en el gràfic anterior l'execució del programa ha estat molt desigual. Cal destacar els municipis de ...... on no s'ha registrat cap auditoria.
+Com es pot veure en el gràfic anterior l'execució del programa ha estat molt desigual. Cal destacar els municipis de l'Escala, Blanes i Banyoles, on no s'ha registrat cap auditoria.
+
 A continuació s'ha procedit a fer dues correccions per tal que les dades siguin homogènies i comparables:
-1. Les auditories que s'han realitzat venen de tres eixos: Social, Salut i Ciutadania. No podem pressuposar que darrera de totes les auditories hi ha una situació de pobresa energètica ni que el nivell de pobresa energètica sigui la mateixa en els tres eixos. La pressumpció de pobresa energètica només es raonable fer-la en les auditories de l'eix social. Per tant, s'ha filtrat només les auditories que provenen de l'eix social. 
-1. El nivell de pobresa energètica no és el mateix en totes les comarques. Per tant, per poder comparar les dades en brut de la gràfica anterior, cal corregir-les per la prima de vulnerabilitat de cada comarca (veure Taula 2: Pesos comarcals ajustats per vulnerabilitat energètica [1]). 
+
+1. Les auditories que s'han realitzat venen de tres eixos: Social, Salut i Ciutadania. No podem pressuposar que darrere de totes les auditories hi ha una situació de pobresa energètica ni que el nivell de pobresa energètica sigui la mateixa en els tres eixos. La presumpció de pobresa energètica només és raonable fer-la en les auditories de l'eix social. Per tant, s'ha filtrat només les auditories que provenen de l'eix social. 
+1. El nivell de pobresa energètica no és el mateix en totes les comarques. En conseqüència, per poder comparar les dades en brut de la gràfica anterior, cal corregir-les per la prima de vulnerabilitat de cada comarca (vegeu Taula 2: Pesos comarcals ajustats per vulnerabilitat energètica [1]). 
 En el següent gràfic podem veure el nombre d'auditories de l'eix social normalitzat pel nombre d'habitants i la prima de vulnerabilitat. 
 
 ```{r, out.width="70%"}
@@ -60,8 +63,8 @@ ggplot(data = primes) +
 
 ## Recomenacions
 
-1. Caldria obtenir una mostra més representativa. Per una banda, la part del territori que no ha participat hauria de contestar. Per tal de poder avançar en l'estudi estadístic, seria desitjable un nivell de participació més homogèni del territori.
-1. I per altra banda, s'han d'activar polítiques perquè els eixos ciutadania i salut augmentin i d'aquesta manera recollir perfils de pobresa energètica diferents als que tenim en l'eix social.
+1. Caldria obtenir una mostra més representativa. Per una banda, la part del territori que no ha participat hauria de contestar. Per tal de poder avançar en l'estudi estadístic, seria desitjable un nivell de participació més homogeni del territori.
+1. I, per altra banda, s'han d'activar polítiques perquè els eixos ciutadania i salut augmentin i d'aquesta manera recollir perfils de pobresa energètica diferents dels que tenim en l'eix social.
 1. S'han d'incorporar dades de despesa energètica per tal de poder computar els indicadors de pobresa energètica [1]. Pensem que, en un futur, pot ser un treball interessant estudiar el grau de pobresa energètica en cada eix i els tipus de pobresa energètica (seguint l'esquema definit en [1]).
 
 ## Referències
