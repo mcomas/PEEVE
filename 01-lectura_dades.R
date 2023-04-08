@@ -1,5 +1,6 @@
 library(dplyr)
 library(readxl)
+library(stringr)
 dades = read_excel("data/22_06_02 DRIVE CC.xlsx", 
                    col_types = c("text", "numeric", "text", 
                                  "numeric", "text", "text", "text", 
